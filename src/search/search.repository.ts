@@ -4,7 +4,7 @@ import { ElasticsearchService as NestElasticsearchService } from '@nestjs/elasti
 import {
   MessageOutput,
   SearchInConversationMessagesInput,
-} from 'src/common/common.types';
+} from '../common/common.types';
 import { buildMessagesSearchQuery } from './search.helpers';
 
 type SearchIndexType = 'messages';

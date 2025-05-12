@@ -35,8 +35,11 @@ describe('ConversationsController', () => {
       ],
     }).compile();
 
-    conversationsController = moduleRef.get<ConversationsController>(ConversationsController);
-    conversationsService = moduleRef.get<ConversationsService>(ConversationsService);
+    conversationsController = moduleRef.get<ConversationsController>(
+      ConversationsController,
+    );
+    conversationsService =
+      moduleRef.get<ConversationsService>(ConversationsService);
   });
 
   it('should be defined', () => {
@@ -85,7 +88,9 @@ describe('ConversationsController', () => {
         },
       ];
 
-      mockConversationsService.getConversationMessages.mockResolvedValue(expectedMessages);
+      mockConversationsService.getConversationMessages.mockResolvedValue(
+        expectedMessages,
+      );
 
       // Act
       const result = await conversationsController.getMessagesByConversation(
@@ -96,15 +101,17 @@ describe('ConversationsController', () => {
 
       // Assert
       expect(result).toEqual(expectedMessages);
-      expect(conversationsService.getConversationMessages).toHaveBeenCalledWith({
-        conversationId,
-        websiteId,
-        filter: {
-          page: query.page,
-          perPage: query.perPage,
-          sort: query.sort,
+      expect(conversationsService.getConversationMessages).toHaveBeenCalledWith(
+        {
+          conversationId,
+          websiteId,
+          filter: {
+            page: query.page,
+            perPage: query.perPage,
+            sort: query.sort,
+          },
         },
-      });
+      );
     });
 
     it('should use default values when query params are missing', async () => {
@@ -138,7 +145,9 @@ describe('ConversationsController', () => {
         },
       ];
 
-      mockConversationsService.getConversationMessages.mockResolvedValue(expectedMessages);
+      mockConversationsService.getConversationMessages.mockResolvedValue(
+        expectedMessages,
+      );
 
       // Act
       const result = await conversationsController.getMessagesByConversation(
@@ -149,15 +158,17 @@ describe('ConversationsController', () => {
 
       // Assert
       expect(result).toEqual(expectedMessages);
-      expect(conversationsService.getConversationMessages).toHaveBeenCalledWith({
-        conversationId,
-        websiteId,
-        filter: {
-          page: 1, // default value
-          perPage: 10, // default value
-          sort: 'ASC', // default value
+      expect(conversationsService.getConversationMessages).toHaveBeenCalledWith(
+        {
+          conversationId,
+          websiteId,
+          filter: {
+            page: 1, // default value
+            perPage: 10, // default value
+            sort: 'ASC', // default value
+          },
         },
-      });
+      );
     });
 
     it('should throw an error when website ID is missing', async () => {
@@ -181,14 +192,20 @@ describe('ConversationsController', () => {
 
       // Act & Assert
       try {
-        await conversationsController.getMessagesByConversation(mockReq, query, params);
+        await conversationsController.getMessagesByConversation(
+          mockReq,
+          query,
+          params,
+        );
         // If we reach this point, the test should fail
         fail('Expected method to throw an error');
       } catch (error) {
         expect(error.message).toBe('Missing x-website-id header');
       }
-      
-      expect(conversationsService.getConversationMessages).not.toHaveBeenCalled();
+
+      expect(
+        conversationsService.getConversationMessages,
+      ).not.toHaveBeenCalled();
     });
   });
 
@@ -234,7 +251,9 @@ describe('ConversationsController', () => {
         },
       ];
 
-      mockConversationsService.searchInConversationMessages.mockResolvedValue(expectedMessages);
+      mockConversationsService.searchInConversationMessages.mockResolvedValue(
+        expectedMessages,
+      );
 
       // Act
       const result = await conversationsController.searchInConversationMessages(
@@ -245,7 +264,9 @@ describe('ConversationsController', () => {
 
       // Assert
       expect(result).toEqual(expectedMessages);
-      expect(conversationsService.searchInConversationMessages).toHaveBeenCalledWith({
+      expect(
+        conversationsService.searchInConversationMessages,
+      ).toHaveBeenCalledWith({
         conversationId,
         websiteId,
         search: searchTerm,
@@ -277,8 +298,8 @@ describe('ConversationsController', () => {
       };
 
       // Only provide search term to test defaults for pagination
-      const query = { 
-        q: searchTerm 
+      const query = {
+        q: searchTerm,
       } as SearchInConversationMessagesQueryDto;
 
       const expectedMessages: MessageOutput[] = [
@@ -290,7 +311,9 @@ describe('ConversationsController', () => {
         },
       ];
 
-      mockConversationsService.searchInConversationMessages.mockResolvedValue(expectedMessages);
+      mockConversationsService.searchInConversationMessages.mockResolvedValue(
+        expectedMessages,
+      );
 
       // Act
       const result = await conversationsController.searchInConversationMessages(
@@ -301,7 +324,9 @@ describe('ConversationsController', () => {
 
       // Assert
       expect(result).toEqual(expectedMessages);
-      expect(conversationsService.searchInConversationMessages).toHaveBeenCalledWith({
+      expect(
+        conversationsService.searchInConversationMessages,
+      ).toHaveBeenCalledWith({
         conversationId,
         websiteId,
         search: searchTerm,
@@ -334,14 +359,20 @@ describe('ConversationsController', () => {
 
       // Act & Assert
       try {
-        await conversationsController.searchInConversationMessages(mockReq, query, params);
+        await conversationsController.searchInConversationMessages(
+          mockReq,
+          query,
+          params,
+        );
         // If we reach this point, the test should fail
         fail('Expected method to throw an error');
       } catch (error) {
         expect(error.message).toBe('Missing x-website-id header');
       }
-      
-      expect(conversationsService.searchInConversationMessages).not.toHaveBeenCalled();
+
+      expect(
+        conversationsService.searchInConversationMessages,
+      ).not.toHaveBeenCalled();
     });
   });
 });

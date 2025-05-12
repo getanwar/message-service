@@ -5,7 +5,7 @@ import { plainToInstance } from 'class-transformer';
 import type { CreateMessageInput } from './messages.types';
 import { Message } from './messages.schema';
 import { MongoMessageOutputDto } from './messages.dto';
-import { GetConversationMessagesInput } from 'src/common/common.types';
+import { GetConversationMessagesInput } from '../common/common.types';
 
 interface IMessagesRepository {
   create(message: CreateMessageInput): Promise<MongoMessageOutputDto>;

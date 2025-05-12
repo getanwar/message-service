@@ -7,7 +7,7 @@ import { MessagesConsumer } from './messages.consumer';
 import { MessagesController } from './messages.controller';
 import { Message, MessageSchema } from './messages.schema';
 import { MessagesRepository } from './messages.repository';
-import { SearchModule } from 'src/search/search.module';
+import { SearchModule } from '../search/search.module';
 
 @Module({
   imports: [

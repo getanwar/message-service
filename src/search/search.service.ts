@@ -4,7 +4,7 @@ import {
   MessageOutput,
   SearchMessageData,
   SearchInConversationMessagesInput,
-} from 'src/common/common.types';
+} from '../common/common.types';
 import { ElasticsearchRepository } from './search.repository';
 
 interface ISearchService {
