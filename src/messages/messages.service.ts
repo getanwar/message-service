@@ -8,8 +8,8 @@ import {
   MongoMessageOutputDto,
 } from './messages.dto';
 import { GetConversationMessagesInput } from '../common/common.types';
-import { KafkaService } from 'src/kafka/kafka.service';
-import { SearchService } from 'src/search/search.service';
+import { KafkaService } from '../kafka/kafka.service';
+import { SearchService } from '../search/search.service';
 
 interface IMessagesService {
   create(message: CreateMessageInputDto): Promise<MongoMessageOutputDto>;

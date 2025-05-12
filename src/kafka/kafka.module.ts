@@ -40,7 +40,7 @@ import { KafkaAdminService } from './kafka-admin.service';
       },
     ]),
   ],
-  providers: [KafkaService, KafkaRepository, KafkaAdminService],
+  providers: [KafkaRepository, KafkaService, KafkaAdminService],
   exports: [KafkaService, KafkaAdminService],
 })
 export class KafkaModule {}

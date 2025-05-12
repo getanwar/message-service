@@ -3,9 +3,9 @@ import {
   MessageOutput,
   GetConversationMessagesInput,
   SearchInConversationMessagesInput,
-} from 'src/common/common.types';
-import { MessagesService } from 'src/messages/messages.service';
-import { SearchService } from 'src/search/search.service';
+} from '../common/common.types';
+import { MessagesService } from '../messages/messages.service';
+import { SearchService } from '../search/search.service';
 
 interface IConversationService {
   getConversationMessages(
