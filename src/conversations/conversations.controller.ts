@@ -7,26 +7,20 @@ import {
   SearchInConversationMessagesQueryDto,
   SearchInConversationMessagesParamsDto,
 } from './conversations.dto';
-import { getWebsiteId } from 'src/lib/helpers';
-import { SearchService } from '../search/search.service';
-import { MessagesService } from '../messages/messages.service';
-import { MongoMessageOutputDto } from 'src/messages/messages.dto';
-import { buildMessagesSearchQuery } from './conversations.helpers';
-import type { SearchMessageData } from '../messages/messages.types';
+import { getWebsiteId } from '../common/helpers';
+import { MessageOutput } from '../common/common.types';
+import { ConversationsService } from './conversations.service';
 
 @Controller('conversations')
 export class ConversationsController {
-  constructor(
-    private searchService: SearchService,
-    private messagesService: MessagesService,
-  ) {}
+  constructor(private conversationService: ConversationsService) {}
 
   @Get(':conversationId/messages')
   getMessagesByConversation(
     @Req() req: Request,
     @Query() query: GetMessagesByConversationQueryDto,
     @Param() params: GetMessagesByConversationParamsDto,
-  ): Promise<MongoMessageOutputDto[]> {
+  ): Promise<MessageOutput[]> {
     const { conversationId } = params;
     const websiteId = getWebsiteId(req);
     const { page, perPage, sort } = query;
@@ -35,7 +29,7 @@ export class ConversationsController {
       sort: sort || 'ASC',
       perPage: perPage || 10,
     };
-    return this.messagesService.getConversationMessages({
+    return this.conversationService.getConversationMessages({
       conversationId,
       websiteId,
       filter,
@@ -47,20 +41,19 @@ export class ConversationsController {
     @Req() req: Request,
     @Query() query: SearchInConversationMessagesQueryDto,
     @Param() params: SearchInConversationMessagesParamsDto,
-  ): Promise<SearchMessageData[]> {
+  ): Promise<MessageOutput[]> {
     const { conversationId } = params;
     const websiteId = getWebsiteId(req);
     const { q: search, page = 1, perPage = 10 } = query;
 
-    const response = await this.searchService.search<SearchMessageData>(
-      'messages',
-      {
-        size: perPage,
-        from: (page - 1) * perPage,
-        query: buildMessagesSearchQuery({ search, websiteId, conversationId }),
+    return await this.conversationService.searchInConversationMessages({
+      conversationId,
+      websiteId,
+      search,
+      filter: {
+        perPage: Number(perPage),
+        page: Number(page),
       },
-    );
-
-    return response.map((res) => res.data);
+    });
   }
 }

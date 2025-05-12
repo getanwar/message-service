@@ -2,12 +2,10 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
 
-import type {
-  CreateMessageInput,
-  GetConversationMessagesInput,
-} from './messages.types';
+import type { CreateMessageInput } from './messages.types';
 import { Message } from './messages.schema';
 import { MongoMessageOutputDto } from './messages.dto';
+import { GetConversationMessagesInput } from 'src/common/common.types';
 
 interface IMessagesRepository {
   create(message: CreateMessageInput): Promise<MongoMessageOutputDto>;

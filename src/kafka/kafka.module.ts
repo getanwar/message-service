@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { ClientsModule, Transport, KafkaOptions } from '@nestjs/microservices';
 
 import { KafkaService } from './kafka.service';
+import { KafkaRepository } from './kafka.repository';
 import { KafkaAdminService } from './kafka-admin.service';
 
 @Module({
@@ -30,13 +31,8 @@ import { KafkaAdminService } from './kafka-admin.service';
           return {
             transport: Transport.KAFKA,
             options: {
-              client: {
-                clientId,
-                brokers,
-              },
-              consumer: {
-                groupId,
-              },
+              consumer: { groupId },
+              client: { clientId, brokers },
             },
           };
         },
@@ -44,7 +40,7 @@ import { KafkaAdminService } from './kafka-admin.service';
       },
     ]),
   ],
-  providers: [KafkaService, KafkaAdminService],
+  providers: [KafkaService, KafkaRepository, KafkaAdminService],
   exports: [KafkaService, KafkaAdminService],
 })
 export class KafkaModule {}

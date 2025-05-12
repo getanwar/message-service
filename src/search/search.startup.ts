@@ -1,11 +1,13 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { SearchService } from './search.service';
+import { ElasticsearchRepository } from './search.repository';
 
 @Injectable()
 export class SearchStartupService implements OnModuleInit {
-  constructor(private readonly elasticsearchService: SearchService) {}
+  constructor(
+    private readonly elasticSearchRepository: ElasticsearchRepository,
+  ) {}
 
   async onModuleInit() {
-    await this.elasticsearchService.createMessageIndex();
+    await this.elasticSearchRepository.createMessageIndex();
   }
 }

@@ -4,6 +4,7 @@ import { ElasticsearchModule as NestElasticsearchModule } from '@nestjs/elastics
 
 import { SearchService } from './search.service';
 import { SearchStartupService } from './search.startup';
+import { ElasticsearchRepository } from './search.repository';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { SearchStartupService } from './search.startup';
       inject: [ConfigService],
     }),
   ],
-  providers: [SearchService, SearchStartupService],
+  providers: [SearchService, ElasticsearchRepository, SearchStartupService],
   exports: [SearchService],
 })
 export class SearchModule {}

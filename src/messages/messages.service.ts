@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
 
-import type {
-  CreateMessageInput,
-  GetConversationMessagesInput,
-} from './messages.types';
+import type { CreateMessageInput } from './messages.types';
 import { MessagesRepository } from './messages.repository';
-import { CreateMessageInputDto, MongoMessageOutputDto } from './messages.dto';
+import {
+  CreateMessageInputDto,
+  MessageCreatedEventDto,
+  MongoMessageOutputDto,
+} from './messages.dto';
+import { GetConversationMessagesInput } from '../common/common.types';
+import { KafkaService } from 'src/kafka/kafka.service';
+import { SearchService } from 'src/search/search.service';
 
 interface IMessagesService {
   create(message: CreateMessageInputDto): Promise<MongoMessageOutputDto>;
@@ -16,13 +20,31 @@ interface IMessagesService {
 
 @Injectable()
 export class MessagesService implements IMessagesService {
-  constructor(private readonly messagesRepository: MessagesRepository) {}
+  constructor(
+    private readonly messagesRepository: MessagesRepository,
+    private readonly searchService: SearchService,
+    private readonly kafkaService: KafkaService,
+  ) {}
 
-  create(message: CreateMessageInput) {
-    return this.messagesRepository.create(message);
+  async create(input: CreateMessageInput) {
+    const message = await this.messagesRepository.create(input);
+
+    this.kafkaService.emit('message.created', {
+      id: message.id,
+      content: message.content,
+      timestamp: message.timestamp,
+      websiteId: message.websiteId,
+      conversationId: message.conversationId,
+    });
+
+    return message;
   }
 
   getConversationMessages(input: GetConversationMessagesInput) {
     return this.messagesRepository.getConversationMessages(input);
+  }
+
+  async handleMessageCreated(message: MessageCreatedEventDto) {
+    await this.searchService.indexMessage(message.id, message);
   }
 }

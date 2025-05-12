@@ -1,14 +1,14 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { SearchMessageData } from './messages.types';
-import { SearchService } from 'src/search/search.service';
+import { MessagesService } from './messages.service';
+import { MessageCreatedEventDto } from './messages.dto';
 
 @Controller()
 export class MessagesConsumer {
-  constructor(private readonly searchService: SearchService) {}
+  constructor(private readonly messagesService: MessagesService) {}
 
   @MessagePattern('message.created')
-  async handleMessageCreated(@Payload() message: SearchMessageData) {
-    await this.searchService.indexData('messages', message.id, message);
+  async handleMessageCreated(@Payload() message: MessageCreatedEventDto) {
+    await this.messagesService.handleMessageCreated(message);
   }
 }

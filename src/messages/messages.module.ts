@@ -4,11 +4,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { KafkaModule } from '../kafka/kafka.module';
 import { MessagesService } from './messages.service';
 import { MessagesConsumer } from './messages.consumer';
-import { MessagesProducer } from './messages.producer';
-import { SearchModule } from '../search/search.module';
 import { MessagesController } from './messages.controller';
 import { Message, MessageSchema } from './messages.schema';
 import { MessagesRepository } from './messages.repository';
+import { SearchModule } from 'src/search/search.module';
 
 @Module({
   imports: [
@@ -17,7 +16,7 @@ import { MessagesRepository } from './messages.repository';
     MongooseModule.forFeature([{ name: Message.name, schema: MessageSchema }]),
   ],
   controllers: [MessagesController, MessagesConsumer],
-  providers: [MessagesRepository, MessagesService, MessagesProducer],
+  providers: [MessagesRepository, MessagesService],
   exports: [MessagesService],
 })
 export class MessagesModule {}
