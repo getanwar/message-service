@@ -1,4 +1,24 @@
 services:
+  messages-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: messages-service
+    restart: always
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+      - MONGO_URI=mongodb://mongodb:27017/tawk
+      - KAFKA_BROKERS=kafka:9093
+      - KAFKA_CLIENT_ID=tawk-messages-client
+      - KAFKA_GROUP_ID=tawk-messages-group
+      - ELASTICSEARCH_NODE=http://elasticsearch:9200
+    depends_on:
+      - mongodb
+      - kafka
+      - elasticsearch
+
   mongodb:
     image: mongo:latest
     container_name: mongodb
