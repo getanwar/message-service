@@ -1,0 +1,163 @@
+{
+	"info": {
+		"_postman_id": "42c5a05a-d14d-4276-a6d7-eee4dc72a300",
+		"name": "Tawk Messages",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23810141"
+	},
+	"item": [
+		{
+			"name": "create message",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-website-id",
+						"value": "681f5c8e1dd91fb590eb6385",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"conversationId\": \"681f5c8e1dd91fb590eb6384\",\n    \"senderId\": \"681f5c8e1dd91fb590eb6384\",\n    \"content\": \"Post 681f5c8e1dd91fb590eb6384\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get conversation messages",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-website-id",
+						"value": "681f5c8e1dd91fb590eb6385",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/conversations/681f5c8e1dd91fb590eb6383/messages?page=1&perPage=100&sort=DESC",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"conversations",
+						"681f5c8e1dd91fb590eb6383",
+						"messages"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "perPage",
+							"value": "100"
+						},
+						{
+							"key": "sort",
+							"value": "DESC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search in conversation",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-website-id",
+						"value": "681f5c8e1dd91fb590eb6385",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/conversations/681f5c8e1dd91fb590eb6383/messages/search?q=with&perPage=2&page=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"conversations",
+						"681f5c8e1dd91fb590eb6383",
+						"messages",
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "with"
+						},
+						{
+							"key": "perPage",
+							"value": "2"
+						},
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
