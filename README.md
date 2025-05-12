@@ -233,6 +233,77 @@ This approach provides logical data isolation between tenants while using a shar
 6. For mutations, events are emitted to Kafka
 7. Response is returned to the client
 
+## Running with Docker Compose
+
+This application and all its dependencies can be run using Docker Compose, which will set up the following services:
+
+- **messages-service**: The main NestJS application
+- **mongodb**: Database for storing messages
+- **mongo-express**: Web-based MongoDB admin interface
+- **zookeeper**: Required for Kafka
+- **kafka**: Message broker for event-driven communication
+- **elasticsearch**: Search engine for full-text search capabilities
+
+### Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/) (included with Docker Desktop)
+
+### Starting the Application
+
+1. Clone the repository and navigate to the project directory:
+
+```bash
+git clone <repository-url>
+cd tawk-messages-service
+```
+
+2. Start all services with Docker Compose:
+
+```bash
+docker-compose up
+```
+
+To run the services in the background (detached mode):
+
+```bash
+docker-compose up -d
+```
+
+3. Wait for all services to initialize (this might take a minute or two on first run)
+
+### Accessing the Services
+
+Once all services are running, you can access:
+
+- **API**: http://localhost:3000/api
+- **MongoDB Express Admin Interface**: http://localhost:8081
+- **Elasticsearch**: http://localhost:9200
+
+### Making API Requests
+
+You can use the included Postman collection to make API requests to the containerized application. The API endpoints will be available at:
+
+- Create Message: http://localhost:3000/api/messages
+- Get Conversation Messages: http://localhost:3000/api/conversations/:conversationId/messages
+- Search in Conversation: http://localhost:3000/api/conversations/:conversationId/messages/search
+
+Remember to include the `x-website-id` header in all requests.
+
+### Shutting Down
+
+To stop all services:
+
+```bash
+docker-compose down
+```
+
+To stop all services and remove volumes (this will delete all data):
+
+```bash
+docker-compose down -v
+```
+
 ## Testing
 
 ```bash
