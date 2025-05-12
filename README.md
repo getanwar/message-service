@@ -1,98 +1,218 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+## API Documentation
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Note: Since I haven't handled website and conversation creation in this service yet, you have to provide valid MongoDB ObjectIds for the `x-website-id` header, `conversationId` and `senderId`.
+I have given a valid mongoDB ObjectId here to copy paste in Postman
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
-
-```bash
-$ npm install
+```
+681f5c8e1dd91fb590eb6384
 ```
 
-## Compile and run the project
+_You don't have to use the ObjectId provided here, you can use any valid mongoDB ObjectId._
 
-```bash
-# development
-$ npm run start
+The tawk-messages-service exposes the following REST APIs:
 
-# watch mode
-$ npm run start:dev
+### Messages
 
-# production mode
-$ npm run start:prod
+#### Create a new message
+
+```
+POST /api/messages
 ```
 
-## Run tests
+**Headers:**
 
-```bash
-# unit tests
-$ npm run test
+- `x-website-id`: The website ID (required)
 
-# e2e tests
-$ npm run test:e2e
+**Request Body:**
 
-# test coverage
-$ npm run test:cov
+```json
+{
+  "content": "Hello, how can I help you today?",
+  "senderId": "60d21b4667d0d8992e610c85",
+  "conversationId": "60d21b4667d0d8992e610c86"
+}
 ```
 
-## Deployment
+**Response:**
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+```json
+{
+  "id": "60d21b4667d0d8992e610c87",
+  "content": "Hello, how can I help you today?",
+  "senderId": "60d21b4667d0d8992e610c85",
+  "conversationId": "60d21b4667d0d8992e610c86",
+  "timestamp": "2023-07-15T14:30:00.000Z",
+  "websiteId": "60d21b4667d0d8992e610c88"
+}
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Conversations
 
-## Resources
+#### Get messages from a conversation
 
-Check out a few resources that may come in handy when working with NestJS:
+```
+GET /api/conversations/:conversationId/messages
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+**Headers:**
 
-## Support
+- `x-website-id`: The website ID (required)
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+**URL Parameters:**
 
-## Stay in touch
+- `conversationId`: The ID of the conversation
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+**Query Parameters:**
 
-## License
+- `page`: Page number (default: 1)
+- `perPage`: Results per page (default: 10)
+- `sort`: Sort order, either 'ASC' or 'DESC' (default: 'ASC')
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+**Response:**
+
+```json
+[
+  {
+    "id": "60d21b4667d0d8992e610c87",
+    "content": "Hello, how can I help you today?",
+    "senderId": "60d21b4667d0d8992e610c85",
+    "conversationId": "60d21b4667d0d8992e610c86",
+    "timestamp": "2023-07-15T14:30:00.000Z"
+  },
+  {
+    "id": "60d21b4667d0d8992e610c89",
+    "content": "I have a question about my account",
+    "senderId": "60d21b4667d0d8992e610c90",
+    "conversationId": "60d21b4667d0d8992e610c86",
+    "timestamp": "2023-07-15T14:31:00.000Z"
+  }
+]
+```
+
+#### Search messages within a conversation
+
+```
+GET /api/conversations/:conversationId/messages/search
+```
+
+**Headers:**
+
+- `x-website-id`: The website ID (required)
+
+**URL Parameters:**
+
+- `conversationId`: The ID of the conversation
+
+**Query Parameters:**
+
+- `q`: Search query string
+- `page`: Page number (default: 1)
+- `perPage`: Results per page (default: 10)
+
+**Response:**
+
+```json
+[
+  {
+    "id": "60d21b4667d0d8992e610c87",
+    "content": "Hello, how can I help you today?",
+    "senderId": "60d21b4667d0d8992e610c85",
+    "conversationId": "60d21b4667d0d8992e610c86",
+    "timestamp": "2023-07-15T14:30:00.000Z"
+  }
+]
+```
+
+## Architecture Decisions
+
+### Microservice Architecture
+
+The tawk-messages-service is built as a standalone microservice focusing exclusively on messages and conversations. This separation of concerns allows for:
+
+1. **Independent Scaling**: The message service can be scaled independently of other services based on its specific load requirements.
+2. **Focused Development**: Teams can work on this service without impacting other parts of the system.
+3. **Technology Specialization**: The service uses technologies optimized for chat messaging (MongoDB for storage, Elasticsearch for search, Kafka for event streaming).
+
+### Technology Stack
+
+1. **NestJS Framework**
+
+   - Provides a robust, modular structure for building scalable server-side applications
+   - Built-in support for dependency injection, making the code more maintainable and testable
+
+2. **MongoDB**
+
+   - Document-oriented database well-suited for storing chat messages
+   - Efficient indexing capabilities for querying conversation histories
+   - Schema flexibility allows for future extensions to message formats
+
+3. **Kafka**
+
+   - Used for event-driven communication between services
+   - Enables real-time processing of message events
+   - Provides reliable message delivery and fault tolerance
+
+4. **Elasticsearch**
+   - Powers the full-text search capabilities for messages
+   - Enables efficient searching within conversations
+   - Provides fast query responses for large volumes of message data
+
+### Data Model
+
+The primary entities in the service are:
+
+1. **Message**
+   - Core attributes: content, senderId, conversationId, websiteId, timestamp
+   - Optional metadata field for extensibility
+   - Indexed by websiteId and conversationId for efficient querying
+
+### Event-Driven Design
+
+The service employs an event-driven architecture:
+
+1. When a new message is created, a `message.created` event is emitted to Kafka
+2. This event is consumed by internal services (like the search service) to update indexes
+3. Other external services can also consume these events to react to new messages
+
+This approach:
+
+- Decouples message creation from additional processing
+- Enables asynchronous handling of side effects (like indexing)
+- Improves system resilience by allowing components to process events at their own pace
+
+### Multi-Tenancy Implementation
+
+The service implements a multi-tenant architecture where each website represents a separate tenant:
+
+1. **Header-Based Tenant Identification**: Every API request requires the `x-website-id` header to identify the tenant.
+2. **Global Middleware Enforcement**: The `WebsiteHeaderMiddleware` validates the presence of the websiteId for all routes.
+3. **Data Isolation**: All database queries are automatically scoped to the specified websiteId.
+   - MongoDB indexes on the websiteId field enable efficient tenant-specific queries
+   - Message schema includes websiteId as a required field with a dedicated index
+4. **Search Partitioning**: Elasticsearch queries include websiteId in search terms to ensure tenant data isolation.
+5. **Event Propagation**: The websiteId is included in all Kafka events, ensuring downstream services maintain tenant context.
+
+This approach provides logical data isolation between tenants while using a shared infrastructure, optimizing resource usage without compromising security.
+
+### Request Flow
+
+1. Client sends a request to the API endpoints
+2. The `WebsiteHeaderMiddleware` extracts and validates the website ID
+3. The appropriate controller handles the request
+4. The service layer processes the business logic
+5. The repository layer interacts with the database
+6. For mutations, events are emitted to Kafka
+7. Response is returned to the client
+
+## Testing
+
+```bash
+# Unit tests
+npm run test
+
+# Test coverage
+npm run test:cov
+
+# End-to-end tests
+npm run test:e2e
+```
