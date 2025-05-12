@@ -123,6 +123,35 @@ GET /api/conversations/:conversationId/messages/search
 ]
 ```
 
+## Using the Postman Collection
+
+A Postman collection is included in the repository to help you test the API endpoints easily. The collection includes pre-configured requests for all available endpoints.
+
+### Importing the Collection
+
+1. Open Postman
+2. Click on "Import" in the top-left corner
+3. Select the `postman.json` file from this repository
+4. You'll see a new collection named "Tawk Messages" in your Postman workspace
+
+### Using the Collection
+
+The collection includes the following pre-configured requests:
+
+1. **Create Message**: Create a new message for a conversation
+2. **Get Conversation Messages**: Retrieve messages from a specific conversation with pagination and sorting
+3. **Search in Conversation**: Search messages within a conversation using text query
+
+Each request is already set up with:
+- The correct endpoint URL
+- Required headers (`x-website-id`)
+- Sample request body (for POST requests)
+- Example query parameters
+
+You may need to adjust the following values based on your setup:
+- MongoDB ObjectIds for `websiteId`, `conversationId`, and `senderId`
+- URL if not running the service on the default port (3000)
+
 ## Architecture Decisions
 
 ### Microservice Architecture
