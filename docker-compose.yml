@@ -9,10 +9,10 @@ services:
       - '3000:3000'
     environment:
       - NODE_ENV=production
-      - MONGO_URI=mongodb://mongodb:27017/tawk
+      - MONGO_URI=mongodb://mongodb:27017/messages
       - KAFKA_BROKERS=kafka:9093
-      - KAFKA_CLIENT_ID=tawk-messages-client
-      - KAFKA_GROUP_ID=tawk-messages-group
+      - KAFKA_CLIENT_ID=messages-client
+      - KAFKA_GROUP_ID=messages-group
       - ELASTICSEARCH_NODE=http://elasticsearch:9200
     depends_on:
       - mongodb

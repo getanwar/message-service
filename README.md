@@ -9,7 +9,7 @@ I have given a valid mongoDB ObjectId here to copy paste in Postman
 
 _You don't have to use the ObjectId provided here, you can use any valid mongoDB ObjectId._
 
-The tawk-messages-service exposes the following REST APIs:
+The messages-service exposes the following REST APIs:
 
 ### Messages
 
@@ -132,7 +132,7 @@ A Postman collection is included in the repository to help you test the API endp
 1. Open Postman
 2. Click on "Import" in the top-left corner
 3. Select the `postman.json` file from this repository
-4. You'll see a new collection named "Tawk Messages" in your Postman workspace
+4. You'll see a new collection in your Postman workspace
 
 ### Using the Collection
 
@@ -143,12 +143,14 @@ The collection includes the following pre-configured requests:
 3. **Search in Conversation**: Search messages within a conversation using text query
 
 Each request is already set up with:
+
 - The correct endpoint URL
 - Required headers (`x-website-id`)
 - Sample request body (for POST requests)
 - Example query parameters
 
 You may need to adjust the following values based on your setup:
+
 - MongoDB ObjectIds for `websiteId`, `conversationId`, and `senderId`
 - URL if not running the service on the default port (3000)
 
@@ -156,7 +158,7 @@ You may need to adjust the following values based on your setup:
 
 ### Microservice Architecture
 
-The tawk-messages-service is built as a standalone microservice focusing exclusively on messages and conversations. This separation of concerns allows for:
+The messages-service is built as a standalone microservice focusing exclusively on messages and conversations. This separation of concerns allows for:
 
 1. **Independent Scaling**: The message service can be scaled independently of other services based on its specific load requirements.
 2. **Focused Development**: Teams can work on this service without impacting other parts of the system.
@@ -255,7 +257,7 @@ This application and all its dependencies can be run using Docker Compose, which
 
 ```bash
 git clone <repository-url>
-cd tawk-messages-service
+cd messages-service
 ```
 
 2. Start all services with Docker Compose:
